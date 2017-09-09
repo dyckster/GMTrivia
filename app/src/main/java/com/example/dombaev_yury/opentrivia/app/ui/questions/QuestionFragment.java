@@ -15,10 +15,12 @@ import com.example.dombaev_yury.opentrivia.app.model.Question;
 import com.example.dombaev_yury.opentrivia.app.mvp.presenters.QuestionPresenter;
 import com.example.dombaev_yury.opentrivia.app.mvp.views.QuestionView;
 import com.example.dombaev_yury.opentrivia.app.ui.BaseFragment;
+import com.example.dombaev_yury.opentrivia.util.AnswersView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionFragment extends BaseFragment implements QuestionView {
+public class QuestionFragment extends BaseFragment implements QuestionView, AnswersView.OnAnswerClickListener {
 
     private static final String ARGUMENT_QUESTION = "question";
 
@@ -33,8 +35,8 @@ public class QuestionFragment extends BaseFragment implements QuestionView {
         return fragment;
     }
 
-    private LinearLayout questionLayout;
     private TextView questionText;
+    private AnswersView answersView;
 
     @Override
     protected int getLayout() {
@@ -43,7 +45,7 @@ public class QuestionFragment extends BaseFragment implements QuestionView {
 
     @Override
     protected void initViews(View rootView) {
-        questionLayout = rootView.findViewById(R.id.question_linear);
+        answersView = rootView.findViewById(R.id.answers_view);
         questionText = rootView.findViewById(R.id.question_text);
         presenter.setQuestion((Question) getArguments().getSerializable(ARGUMENT_QUESTION));
     }
@@ -56,9 +58,7 @@ public class QuestionFragment extends BaseFragment implements QuestionView {
 
     @Override
     public void showAnswers(List<String> answers) {
-        for (String answer : answers) {
-            questionLayout.addView(getTextView(answer));
-        }
+        answersView.setAnswers(answers, this);
     }
 
     @Override
@@ -67,26 +67,8 @@ public class QuestionFragment extends BaseFragment implements QuestionView {
     }
 
 
-    private TextView getTextView(final String answer) {
-        LinearLayout.LayoutParams layoutParams =
-                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        TextView textView = new TextView(getActivity());
-        textView.setLayoutParams(layoutParams);
-        textView.setText(Html.fromHtml(answer));
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(Color.BLACK);
-        textView.setTextSize(24);
-        // TODO: 03.09.17 replace to dp
-        textView.setPadding(0, 100, 0, 100);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: 03.09.17 Проверить правильность
-                presenter.checkAnswer(answer);
-                //или
-                //presenter.checkAnswer(((TextView) view).getText().toString());
-            }
-        });
-        return textView;
+    @Override
+    public boolean onAnswerClicked(String answer) {
+        return presenter.checkAnswer(answer);
     }
 }

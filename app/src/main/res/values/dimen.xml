@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--TODO: Rename-->
+    <dimen name="questions_status_height">64dp</dimen>
+    <dimen name="status_bar_height">24dp</dimen>
+    <dimen name="nav_bar_height">48dp</dimen>
+    <dimen name="answer_mark_margin">4dp</dimen>
+    <dimen name="answer_mark_size">12dp</dimen>
+
+
+</resources>

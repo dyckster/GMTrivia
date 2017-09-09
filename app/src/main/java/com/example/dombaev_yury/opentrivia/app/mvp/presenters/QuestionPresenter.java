@@ -25,7 +25,13 @@ public class QuestionPresenter extends MvpPresenter<QuestionView> {
     }
 
 
-    public void checkAnswer(String answer) {
-        getViewState().answerQuestion(answer.equalsIgnoreCase(question.getCorrectAnswer()));
+    public boolean checkAnswer(String answer) {
+        if (answer.equalsIgnoreCase(question.getCorrectAnswer())) {
+            getViewState().answerQuestion(true);
+            return true;
+        } else {
+            getViewState().answerQuestion(false);
+            return false;
+        }
     }
 }

@@ -1,19 +1,22 @@
 package com.example.dombaev_yury.opentrivia.app.ui.questions;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.dyckster.opentrivia.R;
+import com.example.dombaev_yury.opentrivia.app.model.AnswerState;
 import com.example.dombaev_yury.opentrivia.app.model.Category;
 import com.example.dombaev_yury.opentrivia.app.model.Question;
 import com.example.dombaev_yury.opentrivia.app.mvp.presenters.QuestionsPresenter;
 import com.example.dombaev_yury.opentrivia.app.mvp.views.QuestionsView;
 import com.example.dombaev_yury.opentrivia.app.ui.BaseFragment;
+import com.example.dombaev_yury.opentrivia.util.AnswerMarksView;
 
 import java.util.List;
 
@@ -41,6 +44,8 @@ public class QuestionsFragment extends BaseFragment implements QuestionsView {
     private View startGroup;
     private TextView categoryText;
     private Button startButton;
+    private AnswerMarksView answerMarksView;
+    private static final int DELAY_BEFORE_NEXT = 700; //ms
 
     @Override
     protected int getLayout() {
@@ -60,10 +65,8 @@ public class QuestionsFragment extends BaseFragment implements QuestionsView {
         });
         startGroup = rootView.findViewById(R.id.questions_start_group);
         categoryText = rootView.findViewById(R.id.questions_start_category);
-
         categoryText.setText(getArguments().getString(ARGUMENT_CATEGORY_NAME));
-
-
+        answerMarksView = rootView.findViewById(R.id.answers_marks_view);
     }
 
     @Override
@@ -84,6 +87,7 @@ public class QuestionsFragment extends BaseFragment implements QuestionsView {
 
     @Override
     public void fillWithQuestions(List<Question> questions) {
+        answerMarksView.setAnswersCount(questions.size());
         adapter = new QuestionPagerAdapter(getChildFragmentManager());
         for (Question question : questions) {
             adapter.addFragment(QuestionFragment.newInstance(question), question.getQuestion());
@@ -94,18 +98,39 @@ public class QuestionsFragment extends BaseFragment implements QuestionsView {
 
     @Override
     public void showNextQuestion(int position) {
+        answerMarksView.updateNewPosition(position);
         questionsViewPager.setCurrentItem(position, true);
     }
 
 
     @Override
     public void finishTrivia(List<Question> questions) {
+        int correctAnswers = 0;
+        for (Question question : questions) {
+            if (question.getAnswerState().equals(AnswerState.CORRECT)) {
+                correctAnswers++;
+            }
+        }
 
+        int incorrectAnswers = questions.size() - correctAnswers;
+
+        Log.d("Trivia finished", "Correct answers: " + correctAnswers + "; Incorrect answers: " + incorrectAnswers);
+        questionsViewPager.setVisibility(View.GONE);
     }
 
-    public void answerQuestion(boolean correctly) {
-        Toast.makeText(getActivity(), "Answer is correct: " + correctly, Toast.LENGTH_SHORT).show();
-        presenter.registerAnswer(correctly);
+    public void answerQuestion(final boolean correctly) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (correctly) {
+                    answerMarksView.setAnswerCorrect(questionsViewPager.getCurrentItem());
+                } else {
+                    answerMarksView.setAnswerIncorrect(questionsViewPager.getCurrentItem());
+                }
+                presenter.registerAnswer(correctly);
+
+            }
+        }, DELAY_BEFORE_NEXT);
     }
 
 }

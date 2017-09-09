@@ -1,5 +1,7 @@
 package com.example.dombaev_yury.opentrivia.app.mvp.presenters;
 
+import android.util.Log;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.dombaev_yury.opentrivia.app.api.Api;
@@ -53,7 +55,6 @@ public class QuestionsPresenter extends MvpPresenter<QuestionsView> {
 
     private void onQuestionsLoadedFailure(@Nullable Throwable t) {
         getViewState().hideQuestionsLoading();
-
     }
 
 

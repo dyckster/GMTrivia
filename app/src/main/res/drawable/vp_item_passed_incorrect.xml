@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/vp_item_incorrect_back">
+        <shape
+            android:dither="true"
+            android:shape="oval"
+            android:useLevel="true">
+
+            <size
+                android:width="@dimen/answer_mark_size"
+                android:height="@dimen/answer_mark_size"/>
+            <solid android:color="@color/answerIncorrect" />
+        </shape>
+    </item>
+
+</layer-list>
+

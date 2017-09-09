@@ -49,9 +49,18 @@
             android:layout_gravity="center" />
     </FrameLayout>
 
+
     <com.example.dombaev_yury.opentrivia.util.NonSwipableViewPager
         android:id="@+id/questions_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="visible" />
+
+    <com.example.dombaev_yury.opentrivia.util.AnswerMarksView
+        android:id="@+id/answers_marks_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp" />
+
+
 </android.support.design.widget.CoordinatorLayout>
