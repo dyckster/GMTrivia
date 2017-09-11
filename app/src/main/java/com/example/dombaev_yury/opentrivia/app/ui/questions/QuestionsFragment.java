@@ -29,6 +29,19 @@ public class QuestionsFragment extends BaseFragment implements QuestionsView {
     private static final String ARGUMENT_CATEGORY_NAME = "category-name";
     private static final String ARGUMENT_CATEGORY_ID = "category-id";
 
+    /**
+     * Called when fragment needs to be initiated with random questions from random categories
+     *
+     * @return fragment instance
+     */
+    public static QuestionsFragment newInstance() {
+        Bundle args = new Bundle();
+
+        QuestionsFragment fragment = new QuestionsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public static QuestionsFragment newInstance(Category category) {
         Bundle args = new Bundle();
         args.putLong(ARGUMENT_CATEGORY_ID, category.getId());
@@ -60,7 +73,7 @@ public class QuestionsFragment extends BaseFragment implements QuestionsView {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.loadQuestions(getArguments().getLong(ARGUMENT_CATEGORY_ID));
+                presenter.loadQuestions(getArguments().getLong(ARGUMENT_CATEGORY_ID, QuestionsPresenter.NO_CATEGORY));
             }
         });
         startGroup = rootView.findViewById(R.id.questions_start_group);

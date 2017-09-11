@@ -17,7 +17,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            setCurrentFragment(new CategoriesFragment(), false);
+            setCurrentFragment(new MainFragment(), false);
         }
     }
 

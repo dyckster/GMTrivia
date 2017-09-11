@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/nav_bar_height"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="72dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_play"
+            style="@style/GMTButton.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/action_play" />
+
+        <Button
+            android:id="@+id/button_categories"
+            style="@style/GMTButton.Stroked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/action_categories" />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
+

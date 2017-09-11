@@ -13,7 +13,10 @@ import retrofit2.http.Query;
 public interface TriviaService {
 
     @GET("api.php")
-    Call<ResponseModel<List<Question>>> getQuestions(@Query("amount") int amount, @Query("category") int category);
+    Call<ResponseModel<List<Question>>> getRandomQuestions(@Query("amount") int amount, @Query("difficulty") String difficulty);
+
+    @GET("api.php")
+    Call<ResponseModel<List<Question>>> getQuestions(@Query("amount") int amount, @Query("category") long category);
 
     @GET("api_category.php")
     Call<ResponseModel<List<Category>>> getCategories();

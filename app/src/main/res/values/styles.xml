@@ -20,7 +20,11 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="GMTButton" parent="Base.Widget.AppCompat.Button">
-
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:elevation" tools:ignore="NewApi">2dp</item>
+        <item name="android:stateListAnimator" tools:ignore="NewApi">@null</item>
+        <item name="android:letterSpacing" tools:ignore="NewApi">0.06</item>
     </style>
 
     <style name="AnswerButton" parent="Base.Widget.AppCompat.Button">
@@ -30,4 +34,24 @@
         <item name="android:textColor">@color/md_black_1000</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="GMTButton.Filled" parent="GMTButton">
+        <item name="android:background">@drawable/button_filled</item>
+        <item name="android:textColor">@color/md_white_1000</item>
+        <item name="android:theme">@style/WhiteRippleColorControl</item>
+
+    </style>
+
+    <style name="GMTButton.Stroked" parent="GMTButton">
+        <item name="android:background">@drawable/button_stroked</item>
+        <item name="android:textColor">@color/md_white_1000</item>
+    </style>
+
+
+    <style name="WhiteRippleColorControl">
+        <item name="colorControlNormal">@color/md_white_1000</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/md_grey_100</item>
+    </style>
+
 </resources>
